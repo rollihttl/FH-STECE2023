@@ -3,9 +3,6 @@ set(DOOR_FILES
   door.h
   door.cpp
 
-  timespec.h
-  timespec.cpp
-
   motor.h
   motor-mock.h
   motor-mock.cpp
@@ -67,8 +64,14 @@ add_library(
   door
 
   ${DOOR_FILES}
+  utilitys
 )
+add_library(
+  utilitys
 
+  timespec.h
+  timespec.cpp
+)
 # build information (include path) for our users
 target_include_directories(
   door
