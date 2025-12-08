@@ -23,7 +23,6 @@ add_library(
 )
 
 
-# Verknüpfung der Abhängigkeiten
 target_link_libraries(door PUBLIC motor)
 target_link_libraries(door PUBLIC utilities)
 target_link_libraries(door PUBLIC input_output_switch)

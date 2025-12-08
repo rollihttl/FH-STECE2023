@@ -2,7 +2,6 @@ add_library(
     motor
 
     motor.h
-    # motor.cpp  <-- HINWEIS: Prüfen Sie, ob motor.cpp hier fehlt!
     motor-mock.h
     motor-mock.cpp
     motor-stepper.h
