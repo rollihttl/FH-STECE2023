@@ -63,7 +63,10 @@ EventAction InputEdgeEvent::ready(int fd)
 {
     //Todo: Find a way to decouple event for EventLoop and events for "door" 
     //Implement a interface that abstracts the Event here to for the door logic (probably connects to inputsclass)?
-    // REQUIRED: Seek to start to clear interrupt flag in sysfs
+    // Sysfs edge events: clear the pending POLLPRI by seeking + reading the value.
+    // If we only lseek(), POLLPRI can stay asserted and the loop spins.
     lseek(fd, 0, SEEK_SET);
+    char buf[8];
+    (void)read(fd, buf, sizeof(buf));
     return _event;
 }
