@@ -2,7 +2,6 @@
 #include <door/statemachine/structs.h>
 #include <door/statemachine/inputs.h>
 #include <door/statemachine/outputs.h>
-#include <door/statemachine/polling-timer.h>
 
 #include <door/input_output_switch/input/input-switch.h>
 #include <door/input_output_switch/input/input-switch-mock.h>
@@ -19,7 +18,7 @@
 #include <door/utilities/timespec.h>
 #include <door/utilities/eventloop.h>
 #include <door/utilities/periodic-timer.h>
-#include <door/utilities/timer-expired.h>
+
 #include <door/utilities/timespec.h>
 
 #include <string>
@@ -162,15 +161,13 @@ int main(int argc, char** argv)
 
     //Eventloop
     Eventloop loop;
-    PollingTimer polling_timer(inputs, outputs, door);
-
     PeriodicTimer timer_handler(set_time,
-                                [&inputs, &outputs, &door]()
-                                {
-                                    events_t ev  = inputs.get_events();
-                                    output_t out = door.cyclic(ev);
-                                    outputs.set_outputs(out);
-                                });
+                            [&inputs, &outputs, &door]()
+                            {
+                                events_t ev  = inputs.get_events();
+                                output_t out = door.cyclic(ev);
+                                outputs.set_outputs(out);
+                            });
 
     timer_handler.hookup(loop);
     loop.run();
